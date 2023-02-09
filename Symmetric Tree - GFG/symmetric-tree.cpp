@@ -99,29 +99,34 @@ struct Node {
     }
 };
 */
-class Solution {
-public:
-bool match(Node*root1,Node*root2){
-     if(root1!=NULL && root2!=NULL){
-    bool a=match(root1->left,root2->right);
-    bool b= match(root1->right,root2->left);
-    if((root1->data==root2->data) && a && b)
-        return true;
-    else 
-    return false;
-}
-   else if(root1==NULL&& root2==NULL){
-        return true;
-   }
-    else
-    return false;
-}
-    bool isSymmetric(Node* root) {
-        if(root==NULL){
+class Solution{
+    public:
+      bool symHelper(Node* left,Node*right){
+        if(left!=NULL && right!=NULL){
+        bool l=symHelper(left->left,right->right);
+        bool r= symHelper(left->right,right->left);
+         if((left->data== right->data) && l && r)
+             return true;
+             else
+                 return false;
+         }
+        else if(left==NULL && right==NULL){
             return true;
         }
-        return match(root->left,root->right);
-        
+        else 
+        return false;
+       
+        }
+    // return true/false denoting whether the tree is Symmetric or not
+    bool isSymmetric(struct Node* root)
+    { 
+        if(root==NULL){
+	        return true;
+	    }
+	    // Code here
+	    return symHelper(root->left,root->right);
+    
+  
     }
 };
 
