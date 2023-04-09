@@ -4,10 +4,10 @@ public:
         vector<int>ans;
         unordered_map<int,int>mp;
         for(int i=0;i<nums.size();i++){
-            int req=target-nums[i];
-            if(mp.find(req)!=mp.end()){
+            int need=target-nums[i];
+            if(mp.find(need)!=mp.end()){
                 ans.push_back(i);
-                ans.push_back(mp[req]);
+                ans.push_back(mp[need]);
 
             }
             mp[nums[i]]=i;
