@@ -5,6 +5,7 @@ public:
         int right=height.size()-1;
          int area=0;
         while(left<right){
+            // check
            
            long long currarea=0;
             currarea=(right-left )*min(height[left],height[right]);
