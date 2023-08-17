@@ -1,41 +1,35 @@
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
-        int m = mat.size();
-        int n = mat[0].size();
-        
-        queue<pair<int, int>> q;
-        vector<vector<int>> result(m, vector<int>(n, INT_MAX));
-        
-        // Initialize the queue with cells containing 0
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (mat[i][j] == 0) {
-                    q.push({i, j});
-                    result[i][j] = 0;
+        int n = mat.size();
+        int m = mat[0].size();
+        vector<vector<int>> ans(n, vector<int>(m, 10000));
+
+        for(int i = 0; i<n; i++) {
+            for(int j = 0; j<m; j++) {
+                if(mat[i][j] == 0) {
+                    ans[i][j] = 0;
+                    continue;
                 }
+                if(i>0) 
+                ans[i][j] = min(ans[i][j], 1+ans[i-1][j]);
+                if(j>0) 
+                ans[i][j] = min(ans[i][j], 1+ans[i][j-1]);
             }
         }
-        
-        // Four possible directions: up, down, left, right
-        vector<pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        
-        while (!q.empty()) {
-            auto curr = q.front();
-            q.pop();
-            
-            for (auto dir : directions) {
-                int newRow = curr.first + dir.first;
-                int newCol = curr.second + dir.second;
-                
-                if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n &&
-                    result[newRow][newCol] > result[curr.first][curr.second] + 1) {
-                    result[newRow][newCol] = result[curr.first][curr.second] + 1;
-                    q.push({newRow, newCol});
+        for(int i = n-1; i>=0; i--) {
+            for(int j = m-1; j>=0; j--) {
+                if(mat[i][j] == 0) {
+                    ans[i][j] = 0;
+                    continue;
                 }
+                if(i<n-1) 
+                ans[i][j] = min(ans[i][j], 1+ans[i+1][j]);
+                if(j<m-1) 
+                ans[i][j] = min(ans[i][j], 1+ans[i][j+1]);
             }
         }
-        
-        return result;
+        return ans;
     }
+    
 };
