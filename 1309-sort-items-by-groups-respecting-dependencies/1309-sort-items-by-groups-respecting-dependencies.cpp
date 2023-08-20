@@ -1,93 +1,61 @@
 class Solution {
 public:
-	vector<vector<int>> graph;
-	vector<int> visited;
-	vector<int> done;
-	vector<int> visited_gr;
-	vector<int> done_gr;
-	vector<int> group;
-	vector<vector<int>> beforeItems;
-	vector<int> ans;
 
-	bool sort_group(int gr)
-	{
-		if (visited_gr[gr]) 
-			return done_gr[gr];
-		visited_gr[gr] = true;
+    bool goFindTopo(vector<int> adj[], vector<int> &topoSort, vector<int> &deg) {
+        queue<int> q;
+        for(int i=0;i<deg.size();i++) {
+            if(deg[i] == 0) {
+                q.push(i);
+            }
+        }
+        while(!q.empty()) {
+            int curr = q.front();
+            q.pop();
+            topoSort.push_back(curr);
+            for(auto &v:adj[curr]) {
+                deg[v]--;
+                if(deg[v] == 0) {
+                    q.push(v);
+                }
+            }
+        }
+        return topoSort.size() == deg.size();
+    }
 
-		for (auto item : graph[gr]) {
-			for (auto child : beforeItems[item]) {
-				if (group[child] == -1 && !add(child))
-					return false;
-
-				if (group[child] != -1 && group[child] != gr && !sort_group(group[child]))
-					return false;
-			}
-		}
-
-		for (auto item : graph[gr]) {
-			if (!dfs(item, gr))
-				return false;
-		}
-
-		done_gr[gr] = true;
-		return true;
-	}
-
-	bool add(int item) { // push item have no group or group[item] = -1
-		if (visited[item])
-			return done[item];
-		visited[item] = true;
-
-		for (auto child : beforeItems[item]) {
-			if (group[child] == -1 && !add(child))
-				return false;
-
-			if (group[child] != -1 && !sort_group(group[child]))
-				return false;
-		}
-		done[item] = true;
-		ans.push_back(item);
-		return true;
-	}
-
-	bool dfs(int item, int gr) {
-		if (visited[item])
-			return done[item];
-		visited[item] = true;
-
-		for (auto child : beforeItems[item]) {
-			if (group[child] != gr)
-				continue;
-
-			if (!dfs(child, gr))
-				return false;
-		}
-		done[item] = true;
-		ans.push_back(item);
-		return true;
-	}
-
-	vector<int> sortItems(int n, int m, vector<int> &g, vector<vector<int>> &b) {
-		graph.resize(m);
-		visited.resize(n);
-		done.resize(n);
-		visited_gr.resize(m);
-		done_gr.resize(m);
-		group = g;
-		beforeItems = b;
-		for (int i = 0; i < n; i++) {
-			if (group[i] != -1)
-				graph[group[i]].push_back(i);
-		}
-
-		for (int i = 0; i < n; i++) {
-			if (group[i] == -1 && !add(i))
-				return {};
-			if (group[i] != -1 && !sort_group(group[i]))
-				return {};
-		}
-
-		return ans;
-	}
+    vector<int> sortItems(int n, int m, vector<int>& group, vector<vector<int>>& beforeItems) {
+        for(int i=0;i<n;i++) {
+            if(group[i] == -1) {
+                group[i]= m++;
+            }
+        }
+        vector<int> adjGroup[m], adjItem[n];
+        vector<int> degGroup(m, 0), degItem(n, 0); 
+        for(int i=0;i<n;i++) {
+            for(auto &item : beforeItems[i]) {
+                adjItem[item].push_back(i);
+                degItem[i]++;
+                if(group[i] != group[item]) {
+                    adjGroup[group[item]].push_back(group[i]);
+                    degGroup[group[i]]++;
+                }
+            }
+        }
+        vector<int> orderItems, orderGroups;
+        bool isValidItems = goFindTopo(adjItem, orderItems, degItem);
+        bool isValidGroup = goFindTopo(adjGroup, orderGroups, degGroup);
+        if(!isValidItems || !isValidGroup) {
+            return {};
+        }
+        unordered_map<int, vector<int>> mp;
+        for(auto &it:orderItems) {
+            mp[group[it]].push_back(it);
+        }
+        vector<int> ans;
+        for(auto &it:orderGroups) {
+            for(auto &v:mp[it]) {
+                ans.push_back(v);
+            }
+        }
+        return ans;
+    }
 };
