@@ -16,5 +16,5 @@ public:
         if((s1.size()+s2.size())!=s3.size())return false;
         vector<vector<int>>dp(s1.size()+1,vector<int>(s2.size()+1,-1));
         return helper(0,0,s1,s2,s3,dp);
-    };
+    }
 };
