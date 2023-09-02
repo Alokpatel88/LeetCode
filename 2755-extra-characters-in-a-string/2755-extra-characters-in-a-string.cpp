@@ -1,26 +1,26 @@
-class Solution {
+class Solution 
+{
 public:
-    int solve(string s,int idx,vector<string>& d,vector<int> &dp)
+    int minExtraChar(string s, vector<string>& dict)
     {
-        if(idx>=s.size())
-        return 0;
-        if(dp[idx]!=-1)
-        return dp[idx];
-        string t="";
-        int ans=s.size();
-        for(int i=idx;i<s.size();i++)
+        unordered_set<string>uset; 
+
+        for(auto str:dict)
+         uset.insert(str); 
+
+        int n = s.length();
+        vector<int>dp(n,INT_MAX);
+
+        for(int i=0;i<n;i++)
         {
-            t+=s[i];
-            int e=t.size();
-            if(find(d.begin(),d.end(),t)!=d.end())
-            e=0;
-            int n=solve(s,i+1,d,dp);
-            ans=min(ans,n+e);
+            for(int j=i;j>=0;j--)
+            {
+                string str = s.substr(j,i-j+1);
+                if(uset.find(str)!=uset.end())
+                    dp[i] = (j==0)? 0 : min(dp[i],dp[j-1]);
+            }
+            dp[i] = (i==0) ? min(dp[i],1) : min(dp[i],dp[i-1]+1);
         }
-        return dp[idx]=ans;
-    }
-    int minExtraChar(string s, vector<string>& dictionary) {
-        vector<int> dp(s.size()+1,-1);
-        return solve(s,0,dictionary,dp);
+        return dp[n-1]; 
     }
 };
