@@ -1,26 +1,22 @@
 class Solution {
 public:
-   int arr[101][101];
-   int solve(int m,int n){
-       if(m==0 and n==0 )
-       return 1;
-       else {
-           if(m<0 || n<0)
-           return 0;
-       }
-        if(arr[m][n]!=-1)
-        return arr[m][n];
+    int helper(int x, int y, int m, int n, vector<vector<int>> &dp)
+    {
+        if(x<0 || x>=m || y<0 || y>=n)
+        return 0;
 
-       int top=solve(m-1,n);
-       int left=solve(m,n-1);
+        if(x==m-1 && y==n-1)
+        return 1;
 
-       return arr[m][n]=top+left;
+        if(dp[x][y]!=-1)
+        return dp[x][y];
 
-   }
-
+        //move down or right
+        int ans=helper(x, y+1, m, n, dp) + helper(x+1, y, m, n, dp);
+        return dp[x][y]=ans;
+    }
     int uniquePaths(int m, int n) {
-        memset(arr,-1,sizeof(arr));
-        
-        return solve(m-1,n-1);
+        vector<vector<int>> dp(m, vector<int>(n, -1));
+        return helper(0, 0, m, n, dp);
     }
 };
