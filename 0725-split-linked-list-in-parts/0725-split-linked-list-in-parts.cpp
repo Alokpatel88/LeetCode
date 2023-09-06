@@ -30,7 +30,11 @@ public:
 
         int c=1;
         while(curr!=NULL)
-        { 
+        {
+
+            
+        
+            
             if(c==size+(extracount>0))
             {
                 ListNode* temp=curr->next;
@@ -43,14 +47,19 @@ public:
                 continue;
 
             }
+            
+        
             c++;
             curr=curr->next;
             
+
         }
         while(ans.size()<k)
         {
             ans.push_back(NULL);
         }
         return ans;
+
+        
     }
 };
