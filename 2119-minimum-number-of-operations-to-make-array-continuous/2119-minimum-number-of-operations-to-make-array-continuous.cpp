@@ -1,14 +1,37 @@
 class Solution {
 public:
-    int minOperations(vector<int>& A) {
-        int N = A.size(), ans = N, j = 0;
-        sort(begin(A), end(A));
-        A.erase(unique(begin(A), end(A)), end(A)); 
-        int M = A.size();
-        for (int i = 0; i < M; ++i) {
-            while (j < M && A[j] < A[i] + N) ++j; // let `j` point to the first element that is out of range -- `>= A[i] + N`.
-            ans = min(ans, N - j + i); // The length of this subarray is `j - i`. We need to replace `N - j + i` elements to make it continuous.
+    int minOperations(vector<int>& nums) {
+         sort(nums.begin(), nums.end());
+    int n = nums.size();
+    vector<int> u(nums.begin(), unique(nums.begin(), nums.end()));
+    
+    if (n == 1) {
+        return 0;
+    }
+
+    if (n == 2) {
+        if (abs(nums[0] - nums[1]) != 1) {
+            return 1;
+        } else {
+            return 0;
         }
-        return ans;
+    }
+
+    int i = 0;
+    int j = 0;
+    int ans = 1;
+    int k = u.size();
+    while (j < k && i < k) {
+        int range = u[i] + n - 1;
+            while(j < k&&u[j] <= range){
+              j++;
+            }  
+            ans = max(ans, j - i);
+            i++;
+        }
+         return n - ans;
+    
+
+   
     }
 };
