@@ -17,9 +17,8 @@ int diameter = 0;
        if(root == NULL) return 0;
      int lh =  hight(root->left);
      int rh = hight(root-> right);
-     diameter = max(diameter,( lh + rh));
+     diameter = max(diameter,( lh + rh)); // only add this in hight of BT code 
      return max(lh,rh) +1;
-     
    }
     int diameterOfBinaryTree(TreeNode* root) {
         hight(root);
