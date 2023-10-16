@@ -1,22 +1,37 @@
-class Solution {
-public:
-    vector<vector<int>> generate(int n) {
-        /*
+/*
         1
         1 1
         1 2 1
         1 3 3 1
         1 4 6 4 1
-        */
+*/
+class Solution {
+public:
+     
+     vector<int> genrateCol(int n){
+        //  n = n + 1;
+         vector<int> tmp;
+         tmp.push_back(1);
+         int num  = 1;
+         for(int i = 1 ; i < n ; i++){
+             num = num * (n - i);
+             num = num / i;
+             tmp.push_back(num);
+         }
+         return tmp;
+
+     }
+   
+    vector<vector<int>> generate(int n) {
         vector<vector<int>> ans;
-        ans.push_back(vector<int> (1, 1));
-        for(int i = 1; i < n; i++) {
-            vector<int> row(i + 1, 1);
-            for(int j = 1; j < i; j++) {
-                row[j] = ans[i - 1][j - 1] + ans[i - 1][j];
-            }
-            ans.push_back(row);
+
+        for(int i = 1 ; i <= n ; i++){  
+
+           ans.push_back( genrateCol(i) );
+
         }
+
         return ans;
+        
     }
 };
