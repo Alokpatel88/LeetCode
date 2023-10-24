@@ -18,11 +18,9 @@ public:
         q.push(root);
         while(!q.empty()){
             int n = q.size();
-            // vector<int> v;
             int maxi = INT_MIN;
             for(int i = 0 ; i < n ; i++){
                  TreeNode * temp = q.front();
-                // v.push_back(temp->val);
                 maxi = max(maxi,temp->val);
                  q.pop();   
                 if(temp-> right) 
