@@ -24,11 +24,12 @@ public:
                  TreeNode * temp = q.front();
                 // v.push_back(temp->val);
                 maxi = max(maxi,temp->val);
-                q.pop();   
+                   
                  if(temp-> right) 
                 q.push(temp->right); 
                 if(temp->left)
                 q.push(temp->left);
+                q.pop();
                           
             }
             ans.push_back(maxi);
