@@ -1,10 +1,10 @@
 class Solution {
 public:
     int eliminateMaximum(vector<int>& dist, vector<int>& speed) {
-           vector<double> vec;
+           vector<int> vec;
 
         for (int i = 0; i < dist.size(); i++) {
-            double res = ceil(double(dist[i]) /speed[i]);
+            int res = ceil(double(dist[i]) /speed[i]);
             vec.push_back(res);
         }
 
