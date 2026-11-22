@@ -9,6 +9,7 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 | [0026-remove-duplicates-from-sorted-array](https://github.com/Alokpatel88/LeetCode/tree/master/0026-remove-duplicates-from-sorted-array) |
 | [0053-maximum-subarray](https://github.com/Alokpatel88/LeetCode/tree/master/0053-maximum-subarray) |
 | [0073-set-matrix-zeroes](https://github.com/Alokpatel88/LeetCode/tree/main/0073-set-matrix-zeroes/) | Medium |
+| [0121-best-time-to-buy-and-sell-stock](https://github.com/Alokpatel88/LeetCode/tree/main/0121-best-time-to-buy-and-sell-stock/) | Easy |
 ## Divide and Conquer
 | Problem Name | Difficulty |
 | ------- | ------- |
@@ -17,6 +18,7 @@ A collection of LeetCode questions to ace the coding interview! - Created using 
 | Problem Name | Difficulty |
 | ------- | ------- |
 | [0053-maximum-subarray](https://github.com/Alokpatel88/LeetCode/tree/master/0053-maximum-subarray) |
+| [0121-best-time-to-buy-and-sell-stock](https://github.com/Alokpatel88/LeetCode/tree/main/0121-best-time-to-buy-and-sell-stock/) | Easy |
 ## Two Pointers
 | Problem Name | Difficulty |
 | ------- | ------- |
